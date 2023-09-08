@@ -1,7 +1,11 @@
+import Container from "./components/Container";
+import { Navbar } from "./components/Navbar";
+
 function App() {
   return (
-    <div class="flex justify-center">
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+    <div class="">
+      <Navbar/>
+      <Container/>
     </div>
   );
 }
