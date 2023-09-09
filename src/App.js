@@ -1,12 +1,18 @@
+import { useState } from "react";
 import Container from "./components/Container";
 import { Navbar } from "./components/Navbar";
 
 function App() {
+  const [cantidadCompras, setCantidadCompras] = useState(1);
+  const addCantidad = (nuevaCantidad) => {
+    setCantidadCompras(nuevaCantidad);
+  };
   return (
-    <div class="">
-      <Navbar/>
-      <Container/>
-    </div>
+    <>
+
+      <Navbar cantidadCompras={cantidadCompras}/><br/>
+      <Container addCantidad={addCantidad}/>
+    </>
   );
 }
 
