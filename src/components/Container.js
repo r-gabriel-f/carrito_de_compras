@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DataCarrito } from "../Data/DataCarrito";
 
 const Container = ({ addCantidad }) => {
-  const [Compras, setcompras] = useState(0);
+  const [Compras, setcompras] = useState(1);
 
   const [contadorPorPlato, setContadorPorPlato] = useState({});
   
