@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { DataCarrito } from "../Data/DataCarrito";
 
-const Container = ({ addCantidad }) => {
+const Container = ({ addCantidad, addplatos,  }) => {
   const [Compras, setcompras] = useState(0);
 
   const [contadorPorPlato, setContadorPorPlato] = useState({});
-  
-  
+
+  const [platos, setPlatos] = useState([]);
 
   const incrementarCantidad = (id) => {
     setContadorPorPlato((prevContador) => ({
@@ -25,6 +25,21 @@ const Container = ({ addCantidad }) => {
       }));
       setcompras(Compras - 1);
       addCantidad(Compras - 1);
+    }
+  };
+  console.log(contadorPorPlato)
+  const ColocarPlatos = (id) => {
+    if (!platos.includes(id)) {
+      const nuevosPlatos = [...platos, id];
+      setPlatos(nuevosPlatos);
+      addplatos(nuevosPlatos);
+    }
+  };
+  const RestarPlato = (id) => {
+    if (contadorPorPlato[id] === 1) {
+      const restar = platos.filter((platoId) => platoId !== id);
+      setPlatos(restar);
+      addplatos(restar);
     }
   };
   return (
@@ -47,15 +62,17 @@ const Container = ({ addCantidad }) => {
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full p-4"
             onClick={() => {
-            
               incrementarCantidad(product.id);
+              ColocarPlatos(product.id);
             }}
           >
             Comprar
           </button>
           <button
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full p-4"
-            onClick={() => {restarCantidad(product.id)}}
+            onClick={() => {
+              restarCantidad(product.id); RestarPlato(product.id);
+            }}
           >
             Restar
           </button>
