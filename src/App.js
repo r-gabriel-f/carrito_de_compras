@@ -3,7 +3,7 @@ import Container from "./components/Container";
 import { Navbar } from "./components/Navbar";
 
 function App() {
-  const [cantidadCompras, setCantidadCompras] = useState(1);
+  const [cantidadCompras, setCantidadCompras] = useState(0);
   const addCantidad = (nuevaCantidad) => {
     setCantidadCompras(nuevaCantidad);
   };
