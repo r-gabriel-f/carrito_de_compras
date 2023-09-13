@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DataCarrito } from "../Data/DataCarrito";
 
-const Container = ({ addCantidad, addplatos,  }) => {
+const Container = ({ addCantidad, addplatos, addporplato }) => {
   const [Compras, setcompras] = useState(0);
 
-  const [contadorPorPlato, setContadorPorPlato] = useState({});
+  const [contadorPorPlato, setContadorPorPlato] = useState([]);
 
   const [platos, setPlatos] = useState([]);
 
@@ -27,7 +27,10 @@ const Container = ({ addCantidad, addplatos,  }) => {
       addCantidad(Compras - 1);
     }
   };
-  console.log(contadorPorPlato)
+  useEffect(() => {
+    addporplato(contadorPorPlato);
+  }, [contadorPorPlato, addporplato]);
+
   const ColocarPlatos = (id) => {
     if (!platos.includes(id)) {
       const nuevosPlatos = [...platos, id];
@@ -71,7 +74,8 @@ const Container = ({ addCantidad, addplatos,  }) => {
           <button
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full p-4"
             onClick={() => {
-              restarCantidad(product.id); RestarPlato(product.id);
+              restarCantidad(product.id);
+              RestarPlato(product.id);
             }}
           >
             Restar

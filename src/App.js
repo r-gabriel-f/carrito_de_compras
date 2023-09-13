@@ -5,6 +5,7 @@ import { Modal } from "./components/Modal";
 
 function App() {
   const [cantidadCompras, setCantidadCompras] = useState(0);
+  const [cantidadporCompras, setCantidadporCompras] = useState([]);
   const [platos, setPlatos] = useState([]);
 
   const addCantidad = (nuevaCantidad) => {
@@ -14,17 +15,20 @@ function App() {
   const addplatos = (nuevoPlato) => {
     setPlatos(nuevoPlato);
   };
-
+  const addporplato = (porplato) => {
+    setCantidadporCompras(porplato);
+   
+  };
+  
   return (
     <>
       <Navbar cantidadCompras={cantidadCompras} />
       <br />
-      <Modal platos={platos} />
+      <Modal platos={platos} cantidadporCompras={cantidadporCompras}/>
       <Container
         addCantidad={addCantidad}
         addplatos={addplatos}
-  
-
+        addporplato={addporplato}
       />
     </>
   );
