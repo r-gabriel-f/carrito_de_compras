@@ -24,7 +24,7 @@ function App() {
     <>
       <Navbar cantidadCompras={cantidadCompras} />
       <br />
-      <Modal platos={platos} cantidadporCompras={cantidadporCompras}/>
+      
       <Container
         addCantidad={addCantidad}
         addplatos={addplatos}
