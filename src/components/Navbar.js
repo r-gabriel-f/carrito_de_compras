@@ -1,22 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import { Modal } from "./Modal";
 
-export const Navbar = ({ cantidadCompras }) => {
+export const Navbar = ({ cantidadCompras, toggleModal }) => {
   return (
-    <>
-    <div className="flex fixed w-full h-10 bg-[#000] text-[#ffff]">
-      <div className="flex items-center text-3xl ml-10">
+    <div className="flex fixed w-full  bg-cyan-900 font-serif text-[#ffff] z-50">
+      <div className="flex items-center text-3xl ml-10 p-4">
         <h2>Carrito de Compras</h2>
       </div>
-      <div className="absolute inset-y-0 right-0 mr-10 bg-[#5589]">
-        <p className="absolute right-0 border border-sky-500 rounded-full bg-[#f8fafc] text-xl text-red-500">
-          {cantidadCompras}
-        </p>
-        <ion-icon name="cart-outline" class="w-20 h-10"></ion-icon>
+      <p className="flex items-center justify-center absolute right-10 border-2 border-black rounded-full text-xl text-white bg-[#000] w-8 h-8 z-10">
+        {cantidadCompras}
+      </p>
+      <div className=" flex items-center absolute inset-y-0 right-0 mr-10">
+        <ion-icon
+          name="cart-outline"
+          class="w-20 h-10 cursor-pointer"
+          onClick={toggleModal}
+        ></ion-icon>
       </div>
     </div>
-
-    
-    </>
-    
   );
 };

@@ -46,11 +46,11 @@ const Container = ({ addCantidad, addplatos, addporplato }) => {
     }
   };
   return (
-    <div className="grid grid-cols-3 bg-fondo bg-cover bg-center bg-fixed">
+    <div className="grid grid-cols-3 bg-fondo bg-cover bg-center bg-fixed mt-10">
       {DataCarrito.map((product, i) => (
         <div
           key={i}
-          className="flex flex-col items-center border-2 border-black rounded-lg p-4 m-10 "
+          className="flex flex-col items-center border-2 border-black rounded-lg p-4 m-10 backdrop-blur "
         >
           <img
             src={product.img}
@@ -64,7 +64,7 @@ const Container = ({ addCantidad, addplatos, addporplato }) => {
           </div>
           <div className="flex ">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full p-4 mr-4" 
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full p-4 mr-4"
               onClick={() => {
                 incrementarCantidad(product.id);
                 ColocarPlatos(product.id);
@@ -82,9 +82,7 @@ const Container = ({ addCantidad, addplatos, addporplato }) => {
               Restar
             </button>
           </div>
-    
         </div>
-        
       ))}
     </div>
   );
