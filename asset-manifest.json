@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/carrito_de_compras/static/css/main.493b7cfb.css",
+    "main.js": "/carrito_de_compras/static/js/main.bfe20ad6.js",
+    "static/media/fondo.png": "/carrito_de_compras/static/media/fondo.c917d14e80c712bfe5a1.png",
+    "index.html": "/carrito_de_compras/index.html",
+    "main.493b7cfb.css.map": "/carrito_de_compras/static/css/main.493b7cfb.css.map",
+    "main.bfe20ad6.js.map": "/carrito_de_compras/static/js/main.bfe20ad6.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.493b7cfb.css",
+    "static/js/main.bfe20ad6.js"
+  ]
+}
