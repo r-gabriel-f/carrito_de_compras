@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { DataCarrito } from "../Data/DataCarrito";
 
-const Container = ({ addCantidad, addplatos, addporplato }) => {
+const Container = ({ addCantidad, addplatos, addporplato, togglevacio }) => {
   const [Compras, setcompras] = useState(0);
-
   const [contadorPorPlato, setContadorPorPlato] = useState([]);
-
   const [platos, setPlatos] = useState([]);
+
+
+  useEffect(() => {
+    if (togglevacio) {
+      const timer = setTimeout(() => {
+        window.location.reload();
+      }, 3000); 
+  
+      return () => clearTimeout(timer);
+    }
+  }, [togglevacio]);
 
   const incrementarCantidad = (id) => {
     setContadorPorPlato((prevContador) => ({
@@ -27,6 +36,7 @@ const Container = ({ addCantidad, addplatos, addporplato }) => {
       addCantidad(Compras - 1);
     }
   };
+
   useEffect(() => {
     addporplato(contadorPorPlato);
   }, [contadorPorPlato, addporplato]);
@@ -38,6 +48,7 @@ const Container = ({ addCantidad, addplatos, addporplato }) => {
       addplatos(nuevosPlatos);
     }
   };
+
   const RestarPlato = (id) => {
     if (contadorPorPlato[id] === 1) {
       const restar = platos.filter((platoId) => platoId !== id);
@@ -45,6 +56,7 @@ const Container = ({ addCantidad, addplatos, addporplato }) => {
       addplatos(restar);
     }
   };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-fondo bg-cover bg-center bg-fixed mt-10">
       {DataCarrito.map((product, i) => (
@@ -52,13 +64,11 @@ const Container = ({ addCantidad, addplatos, addporplato }) => {
           key={i}
           className="flex flex-col items-center border-2 border-black rounded-lg p-4 m-10 backdrop-blur"
         >
-    
-            <img
-              src={product.img}
-              alt={product.name}
-              className="w-80 h-60 rounded-full border-2 border-black"
-            />
-   
+          <img
+            src={product.img}
+            alt={product.name}
+            className="w-80 h-60 rounded-full border-2 border-black"
+          />
 
           <div className="text-center p-4 text-white h-30 w-30">
             <p>Plato: {product.name}</p>

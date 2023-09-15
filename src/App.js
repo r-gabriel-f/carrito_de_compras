@@ -8,7 +8,7 @@ function App() {
   const [cantidadporCompras, setCantidadporCompras] = useState([]);
   const [platos, setPlatos] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [vacio, setVacio] = useState(false);
 
   const addCantidad = (nuevaCantidad) => {
     setCantidadCompras(nuevaCantidad);
@@ -23,9 +23,22 @@ function App() {
   const toggleModal = () => {
     setModalVisible(!modalVisible);
   };
-  const pagar = () => {
-    window.location.reload(true);
+ 
+
+
+  const togglevacio = (valor) => {
+    setVacio(valor);
+
   };
+
+
+  
+  const pagar = () => {
+    setCantidadporCompras([]);
+    setCantidadCompras(0);
+    setPlatos([]);
+  };
+  
   return (
     <>
       <Navbar cantidadCompras={cantidadCompras} toggleModal={toggleModal} />
@@ -36,13 +49,15 @@ function App() {
           cantidadporCompras={cantidadporCompras}
           toggleModal={toggleModal}
           pagar={pagar}
- 
+          togglevacio={togglevacio }
+       
         />
       )}
       <Container
         addCantidad={addCantidad}
         addplatos={addplatos}
         addporplato={addporplato}
+        togglevacio={vacio}
 
       />
     </>

@@ -1,23 +1,33 @@
 import React from "react";
 import { DataCarrito } from "../Data/DataCarrito";
 import Swal from "sweetalert2";
-export const Modal = ({ platos, cantidadporCompras, toggleModal, pagar}) => {
+export const Modal = ({ platos, cantidadporCompras, toggleModal, pagar, togglevacio }) => {
   const productosSeleccionados = DataCarrito.filter((product) =>
     platos.includes(product.id)
   );
   let totalGeneral = 0;
-  const handleCompraClick = () => {
-   
-    Swal.fire({
-      position: "center",
-      icon: "success",
-      title: "Tu compra se ha realizado con éxito",
-      showConfirmButton: false,
-      timer: 4500,
-    });
 
-    
-    pagar();
+  const handleCompraClick = () => {
+    if (productosSeleccionados.length === 0) {
+      // Verifica si el carrito está vacío antes de comprar
+      Swal.fire({
+        icon: "error",
+        title: "El carrito está vacío",
+        text: "Agrega productos al carrito antes de comprar.",
+        confirmButtonText: "OK",
+      });
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Tu compra se ha realizado con éxito",
+        showConfirmButton: false,
+        timer: 2500,
+      });
+      toggleModal();
+      togglevacio(true);
+      pagar();
+    }
   };
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-50">
@@ -92,7 +102,10 @@ export const Modal = ({ platos, cantidadporCompras, toggleModal, pagar}) => {
           <strong>Total General:</strong> {totalGeneral} Bs.
         </div>
         <div className="flex justify-center">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full p-4 mr-4" onClick={handleCompraClick}>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full p-4 mr-4"
+            onClick={handleCompraClick}
+          >
             Comprar
           </button>
         </div>
