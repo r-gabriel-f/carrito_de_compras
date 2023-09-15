@@ -4,7 +4,7 @@ import { Modal } from "./Modal";
 export const Navbar = ({ cantidadCompras, toggleModal }) => {
   return (
     <div className="flex fixed w-full  bg-cyan-900 font-serif text-[#ffff] z-50">
-      <div className="flex items-center text-3xl ml-10 p-4">
+      <div className="flex items-center text-2xl ml-10 p-4 md:text-3xl">
         <h2>Carrito de Compras</h2>
       </div>
       <p className="flex items-center justify-center absolute right-10 border-2 border-black rounded-full text-xl text-white bg-[#000] w-8 h-8 z-10">
