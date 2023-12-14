@@ -64,7 +64,7 @@ const Container = ({ addCantidad, addplatos, addporplato, togglevacio }) => {
           key={i}
           className="flex flex-col items-center border-2 border-black rounded-lg p-4 m-10 backdrop-blur"
         >
-          <img
+          <LazyLoadImage
             src={product.img}
             alt={product.name}
             className="w-80 h-60 rounded-full border-2 border-black"
