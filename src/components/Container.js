@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DataCarrito } from "../Data/DataCarrito";
-
+import { LazyLoadImage } from "react-lazy-load-image-component";
 const Container = ({ addCantidad, addplatos, addporplato, togglevacio }) => {
   const [Compras, setcompras] = useState(0);
   const [contadorPorPlato, setContadorPorPlato] = useState([]);
