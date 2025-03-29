@@ -1,53 +1,19 @@
 import { useState } from "react";
 import Container from "./components/Container";
 import Navbar from "./components/Navbar";
-import { Modal } from "./components/Modal";
 
 function App() {
-  const [cantidadCompras, setCantidadCompras] = useState(0);
-  const [cantidadporCompras, setCantidadporCompras] = useState([]);
-  const [platos, setPlatos] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [vacio, setVacio] = useState(false);
+  const [compras, setCompras] = useState(0);
+  const [contadorPorPlato, setContadorPorPlato] = useState({});
 
-  const addCantidad = (nuevaCantidad) => {
-    setCantidadCompras(nuevaCantidad);
-  };
-
-  const addplatos = (nuevoPlato) => {
-    setPlatos(nuevoPlato);
-  };
-  const addporplato = (porplato) => {
-    setCantidadporCompras(porplato);
-  };
-  const toggleModal = () => {
-    setModalVisible(!modalVisible);
-  };
- 
-
-
-  const togglevacio = (valor) => {
-    setVacio(valor);
-
-  };
-
-
-  
-  const pagar = () => {
-    setCantidadporCompras([]);
-    setCantidadCompras(0);
-    setPlatos([]);
-  };
-  
   return (
     <>
-      <Navbar/>
+      <Navbar compras={compras} contadorPorPlato={contadorPorPlato} />
       <Container
-        addCantidad={addCantidad}
-        addplatos={addplatos}
-        addporplato={addporplato}
-        togglevacio={vacio}
-
+        compras={compras}
+        setCompras={setCompras}
+        contadorPorPlato={contadorPorPlato}
+        setContadorPorPlato={setContadorPorPlato}
       />
     </>
   );

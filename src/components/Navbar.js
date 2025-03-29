@@ -8,9 +8,9 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Container from "@mui/material/Container";
-import Badge from '@mui/material/Badge';
+import Badge from "@mui/material/Badge";
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar({ compras, contadorPorPlato }) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -18,7 +18,7 @@ function ResponsiveAppBar() {
 
   return (
     <AppBar position="static">
-      <ModalCarrito open={open} handleClose={handleClose} />
+      <ModalCarrito open={open} handleClose={handleClose} contadorPorPlato={contadorPorPlato}/>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -38,8 +38,7 @@ function ResponsiveAppBar() {
             Carrito de compras
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-          </Box>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}></Box>
           <Typography
             variant="h5"
             noWrap
@@ -60,7 +59,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
           <Box sx={{ flexGrow: 0 }}>
             <IconButton onClick={handleOpen} sx={{ p: 0 }}>
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={compras || 0} color="secondary">
                 <AddShoppingCartIcon sx={{ color: "white" }} />
               </Badge>
             </IconButton>

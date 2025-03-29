@@ -10,6 +10,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+import { DataCarrito } from "../Data/DataCarrito";
 
 const style = {
   position: "absolute",
@@ -22,28 +23,18 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-function createData(img, plato, cantidad, precio, total) {
-  return { img, plato, cantidad, precio, total };
-}
-
-const rows = [
-  createData(
-    "https://img.freepik.com/vector-gratis/dibujos-animados-hamburguesa-deliciosa-aislado_1308-134032.jpg?w=740&t=st=1694204994~exp=1694205594~hmac=a085941eabe620233f0b2ddf09aaf322bfcb7fd5bc8ab1eb12f9caabfab5009e",
-    "Frozen yoghurt",
-    159,
-    6.0,
-    24
-  ),
-  createData(
-    "https://img.freepik.com/vector-gratis/dibujos-animados-hamburguesa-deliciosa-aislado_1308-134032.jpg?w=740&t=st=1694204994~exp=1694205594~hmac=a085941eabe620233f0b2ddf09aaf322bfcb7fd5bc8ab1eb12f9caabfab5009e",
-    "Ice cream sandwich",
-    237,
-    9.0,
-    37
-  ),
-];
-
-export default function ModalCarrito({ open, handleClose }) {
+export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
+  const dataPlatoSelected = () => {
+    const data = DataCarrito.filter((item) => contadorPorPlato[item.id]).map(
+      (item) => ({
+        ...item,
+        amount: contadorPorPlato[item.id],
+        total: item.price * contadorPorPlato[item.id],
+      })
+    );
+    return data;
+  };
+  const selectPlato = dataPlatoSelected();
   return (
     <Modal
       open={open}
@@ -72,7 +63,7 @@ export default function ModalCarrito({ open, handleClose }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
+              {selectPlato.map((row) => (
                 <TableRow
                   key={row.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -80,9 +71,9 @@ export default function ModalCarrito({ open, handleClose }) {
                   <TableCell component="th" scope="row">
                     <img src={row.img} alt="" className="w-12 h-12" />
                   </TableCell>
-                  <TableCell>{row.plato}</TableCell>
-                  <TableCell>{row.cantidad}</TableCell>
-                  <TableCell>{row.precio}</TableCell>
+                  <TableCell>{row.name}</TableCell>
+                  <TableCell>{row.amount}</TableCell>
+                  <TableCell>{row.price}</TableCell>
                   <TableCell>{row.total}</TableCell>
                 </TableRow>
               ))}
@@ -90,7 +81,9 @@ export default function ModalCarrito({ open, handleClose }) {
           </Table>
         </TableContainer>
         <div className="flex justify-center mt-4">
-          <Button variant="contained" color="success" onClick={handleClose}>Comprar</Button>
+          <Button variant="contained" color="success" onClick={handleClose}>
+            Comprar
+          </Button>
         </div>
       </Box>
     </Modal>
