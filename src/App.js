@@ -42,7 +42,6 @@ function App() {
   return (
     <>
       <Navbar/>
-      <br />
       <Container
         addCantidad={addCantidad}
         addplatos={addplatos}

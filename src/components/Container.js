@@ -2,6 +2,14 @@ import React, { useState, useEffect } from "react";
 import { DataCarrito } from "../Data/DataCarrito";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useStore, Counter } from "../stores/Bay";
+
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
 const Container = ({ addCantidad, addplatos, addporplato, togglevacio }) => {
   const [Compras, setcompras] = useState(0);
   const [contadorPorPlato, setContadorPorPlato] = useState([]);
@@ -14,8 +22,8 @@ const Container = ({ addCantidad, addplatos, addporplato, togglevacio }) => {
     if (togglevacio) {
       const timer = setTimeout(() => {
         window.location.reload();
-      }, 3000); 
-  
+      }, 3000);
+
       return () => clearTimeout(timer);
     }
   }, [togglevacio]);
@@ -63,49 +71,49 @@ const Container = ({ addCantidad, addplatos, addporplato, togglevacio }) => {
   };
 
   return (
-    
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-fondo bg-cover bg-center bg-fixed mt-10">
-      <div className="col-span-full flex justify-center items-center mb-4">
-        <Counter />
+    <div className="bg-fondo bg-cover bg-center h-screen">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {DataCarrito.map((product, i) => (
+          <Card sx={{ maxWidth: 345 }}>
+            <CardMedia sx={{ height: 140 }} image={product.img} />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {product.name}
+              </Typography>
+              <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                Precio: {product.price} Bs
+              </Typography>
+              <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                Cantidad: {contadorPorPlato[product.id] || 0}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button
+                size="small"
+                variant="contained"
+                color="success"
+                onClick={() => {
+                  incrementarCantidad(product.id);
+                  ColocarPlatos(product.id);
+                }}
+              >
+                Comprar
+              </Button>
+              <Button
+                size="small"
+                variant="contained"
+                color="error"
+                onClick={() => {
+                  restarCantidad(product.id);
+                  RestarPlato(product.id);
+                }}
+              >
+                Restar
+              </Button>
+            </CardActions>
+          </Card>
+        ))}
       </div>
-      {DataCarrito.map((product, i) => (
-        <div
-          key={i}
-          className="flex flex-col items-center border-2 border-black rounded-lg p-4 m-10 backdrop-blur"
-        >
-          <LazyLoadImage
-            src={product.img}
-            alt={product.name}
-            className="w-80 h-60 rounded-full border-2 border-black"
-          />
-
-          <div className="text-center p-4 text-white h-30 w-30">
-            <p>Plato: {product.name}</p>
-            <p>Precio: {product.price} Bs.</p>
-            <p>Cantidad: {contadorPorPlato[product.id] || 0}</p>
-          </div>
-          <div className="flex justify-center items-center">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full p-4 mr-4"
-              onClick={() => {
-                incrementarCantidad(product.id);
-                ColocarPlatos(product.id);
-              }}
-            >
-              Comprar
-            </button>
-            <button
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full p-4"
-              onClick={() => {
-                restarCantidad(product.id);
-                RestarPlato(product.id);
-              }}
-            >
-              Restar
-            </button>
-          </div>
-        </div>
-      ))}
     </div>
   );
 };
