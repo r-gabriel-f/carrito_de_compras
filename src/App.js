@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Container from "./components/Container";
-import { Navbar } from "./components/Navbar";
+import Navbar from "./components/Navbar";
 import { Modal } from "./components/Modal";
 
 function App() {
@@ -41,7 +41,7 @@ function App() {
   
   return (
     <>
-      <Navbar cantidadCompras={cantidadCompras} toggleModal={toggleModal} />
+      <Navbar/>
       <br />
       {modalVisible && (
         <Modal

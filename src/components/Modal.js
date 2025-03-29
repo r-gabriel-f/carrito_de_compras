@@ -9,7 +9,6 @@ export const Modal = ({ platos, cantidadporCompras, toggleModal, pagar, toggleva
 
   const handleCompraClick = () => {
     if (productosSeleccionados.length === 0) {
-      // Verifica si el carrito está vacío antes de comprar
       Swal.fire({
         icon: "error",
         title: "El carrito está vacío",
@@ -32,27 +31,6 @@ export const Modal = ({ platos, cantidadporCompras, toggleModal, pagar, toggleva
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-50">
       <div className="bg-cyan-900 p-4 rounded shadow-lg ">
-        <div className="flex justify-end">
-          <button
-            onClick={toggleModal}
-            className="text-white  focus:outline-none"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
         <h3 className=" text-center text-3xl font-serif mb-4 text-white">
           Compras
         </h3>

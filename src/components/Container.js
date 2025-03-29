@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { DataCarrito } from "../Data/DataCarrito";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useStore, Counter } from "../stores/Bay";
 const Container = ({ addCantidad, addplatos, addporplato, togglevacio }) => {
   const [Compras, setcompras] = useState(0);
   const [contadorPorPlato, setContadorPorPlato] = useState([]);
   const [platos, setPlatos] = useState([]);
 
+  const incrementGlobal = useStore((state) => state.inc);
+  const decrementGlobal = useStore((state) => state.dec);
 
   useEffect(() => {
     if (togglevacio) {
@@ -24,6 +27,7 @@ const Container = ({ addCantidad, addplatos, addporplato, togglevacio }) => {
     }));
     setcompras(Compras + 1);
     addCantidad(Compras + 1);
+    incrementGlobal(); // Incrementar el contador global de Zustand
   };
 
   const restarCantidad = (id) => {
@@ -34,6 +38,7 @@ const Container = ({ addCantidad, addplatos, addporplato, togglevacio }) => {
       }));
       setcompras(Compras - 1);
       addCantidad(Compras - 1);
+      decrementGlobal(); // Decrementar el contador global de Zustand
     }
   };
 
@@ -58,7 +63,11 @@ const Container = ({ addCantidad, addplatos, addporplato, togglevacio }) => {
   };
 
   return (
+    
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-fondo bg-cover bg-center bg-fixed mt-10">
+      <div className="col-span-full flex justify-center items-center mb-4">
+        <Counter />
+      </div>
       {DataCarrito.map((product, i) => (
         <div
           key={i}
