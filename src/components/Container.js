@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { DataCarrito } from "../Data/DataCarrito";
 import { useStore } from "../stores/Bay";
 
@@ -17,6 +17,7 @@ const Container = ({
 }) => {
   const incrementGlobal = useStore((state) => state.inc);
   const decrementGlobal = useStore((state) => state.dec);
+  const count = useStore((state) => state.count);
 
   const incrementarCantidad = (id) => {
     setContadorPorPlato((prevContador) => ({
@@ -37,11 +38,20 @@ const Container = ({
       decrementGlobal();
     }
   };
+  useEffect(() => {
+    if (count === 0) {
+      setCompras(0);
+      setContadorPorPlato({});
+    }
+  }, [count, setCompras, setContadorPorPlato]);
+
+ 
+
   return (
     <div className="bg-fondo bg-cover bg-center h-screen">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {DataCarrito.map((product, i) => (
-          <div className="mt-5">
+        {DataCarrito.map((product) => (
+          <div className="mt-5" key={product.id}>
             <Card
               sx={{
                 maxWidth: 345,
@@ -68,9 +78,7 @@ const Container = ({
                   size="small"
                   variant="contained"
                   color="success"
-                  onClick={() => {
-                    incrementarCantidad(product.id);
-                  }}
+                  onClick={() => incrementarCantidad(product.id)}
                 >
                   Comprar
                 </Button>
@@ -78,9 +86,7 @@ const Container = ({
                   size="small"
                   variant="contained"
                   color="error"
-                  onClick={() => {
-                    restarCantidad(product.id);
-                  }}
+                  onClick={() => restarCantidad(product.id)}
                 >
                   Restar
                 </Button>

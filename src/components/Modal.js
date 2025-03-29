@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import { Snackbar } from "@mui/material";
 import { DataCarrito } from "../Data/DataCarrito";
+import { useStore } from "../stores/Bay"; // Asegúrate de que la ruta sea correcta
 
 const style = {
   position: "absolute",
@@ -30,6 +31,7 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
   const [openBay, setOpenBay] = React.useState(false);
   const [message, setMessage] = React.useState("");
   const [messageAlert, setMessageAlert] = React.useState("");
+  const rest = useStore((state) => state.rest);
 
   const dataPlatoSelected = () => {
     return DataCarrito.filter((item) => contadorPorPlato[item.id]).map(
@@ -56,7 +58,8 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
 
   const handleCloseBay = () => {
     if (selectPlato.length > 0) {
-      handleClose()
+      rest();
+      handleClose();
     }
     setOpenBay(false);
   };
