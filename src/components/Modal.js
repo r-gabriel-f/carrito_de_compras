@@ -1,93 +1,98 @@
-import React from "react";
-import { DataCarrito } from "../Data/DataCarrito";
-import Swal from "sweetalert2";
-export const Modal = ({ platos, cantidadporCompras, toggleModal, pagar, togglevacio }) => {
-  const productosSeleccionados = DataCarrito.filter((product) =>
-    platos.includes(product.id)
-  );
-  let totalGeneral = 0;
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
 
-  const handleCompraClick = () => {
-    if (productosSeleccionados.length === 0) {
-      Swal.fire({
-        icon: "error",
-        title: "El carrito está vacío",
-        text: "Agrega productos al carrito antes de comprar.",
-        confirmButtonText: "OK",
-      });
-    } else {
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Tu compra se ha realizado con éxito",
-        showConfirmButton: false,
-        timer: 2500,
-      });
-      toggleModal();
-      togglevacio(true);
-      pagar();
-    }
-  };
-  return (
-    <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-50">
-      <div className="bg-cyan-900 p-4 rounded shadow-lg ">
-        <h3 className=" text-center text-3xl font-serif mb-4 text-white">
-          Compras
-        </h3>
-        <div className="h-32 overflow-y-auto">
-          <table className="text-[#000] w-full border-collapse">
-            <thead className="bg-[#000] text-white">
-              <tr>
-                <th className="py-2 px-4 text-center border">Plato</th>
-                <th className="py-2 px-4 text-center border">Cantidad</th>
-                <th className="py-2 px-4 text-center border">Precio (Bs.)</th>
-                <th className="py-2 px-4 text-center border">Total (Bs.)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {productosSeleccionados.map((product) => {
-                const cantidad = cantidadporCompras[product.id];
-                const total = cantidad * product.price;
-                totalGeneral += total;
-
-                return (
-                  <tr key={product.id}>
-                    <td className="py-2 px-4 text-center text-white">
-                      <img
-                        src={product.img}
-                        alt={product.name}
-                        className="w-10 h-10 rounded-full border-2 border-black mx-auto"
-                      />
-                      <p>{product.name}</p>
-                    </td>
-                    <td className="py-2 px-4 text-center text-white ">
-                      {cantidad}
-                    </td>
-                    <td className="py-2 px-4 text-center text-white">
-                      {product.price}
-                    </td>
-                    <td className="py-2 px-4 text-center text-white">
-                      {total}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-
-        <div className="m-5 text-center text-white">
-          <strong>Total General:</strong> {totalGeneral} Bs.
-        </div>
-        <div className="flex justify-center">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full p-4 mr-4"
-            onClick={handleCompraClick}
-          >
-            Comprar
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 900,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
 };
+function createData(img, plato, cantidad, precio, total) {
+  return { img, plato, cantidad, precio, total };
+}
+
+const rows = [
+  createData(
+    "https://img.freepik.com/vector-gratis/dibujos-animados-hamburguesa-deliciosa-aislado_1308-134032.jpg?w=740&t=st=1694204994~exp=1694205594~hmac=a085941eabe620233f0b2ddf09aaf322bfcb7fd5bc8ab1eb12f9caabfab5009e",
+    "Frozen yoghurt",
+    159,
+    6.0,
+    24
+  ),
+  createData(
+    "https://img.freepik.com/vector-gratis/dibujos-animados-hamburguesa-deliciosa-aislado_1308-134032.jpg?w=740&t=st=1694204994~exp=1694205594~hmac=a085941eabe620233f0b2ddf09aaf322bfcb7fd5bc8ab1eb12f9caabfab5009e",
+    "Ice cream sandwich",
+    237,
+    9.0,
+    37
+  ),
+];
+
+export default function ModalCarrito({ open, handleClose }) {
+  return (
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={style}>
+        <Typography
+          id="modal-modal-title"
+          variant="h6"
+          component="h2"
+          className="text-center my-5"
+        >
+          Carrito de compras
+        </Typography>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+            <TableHead>
+              <TableRow>
+                <TableCell></TableCell>
+                <TableCell>Plato</TableCell>
+                <TableCell>Cantidad</TableCell>
+                <TableCell>Precio (Bs.)</TableCell>
+                <TableCell>Total (Bs.)</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <TableRow
+                  key={row.name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    <img src={row.img} alt="" className="w-12 h-12" />
+                  </TableCell>
+                  <TableCell>{row.plato}</TableCell>
+                  <TableCell>{row.cantidad}</TableCell>
+                  <TableCell>{row.precio}</TableCell>
+                  <TableCell>{row.total}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <div className="flex justify-center mt-4">
+          <Button variant="contained" color="success" onClick={handleClose}>Comprar</Button>
+        </div>
+      </Box>
+    </Modal>
+  );
+}

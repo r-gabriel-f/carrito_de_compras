@@ -43,16 +43,6 @@ function App() {
     <>
       <Navbar/>
       <br />
-      {modalVisible && (
-        <Modal
-          platos={platos}
-          cantidadporCompras={cantidadporCompras}
-          toggleModal={toggleModal}
-          pagar={pagar}
-          togglevacio={togglevacio }
-       
-        />
-      )}
       <Container
         addCantidad={addCantidad}
         addplatos={addplatos}

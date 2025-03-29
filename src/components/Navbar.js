@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useState } from "react";
+import ModalCarrito from "./Modal";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,18 +11,14 @@ import Container from "@mui/material/Container";
 import Badge from '@mui/material/Badge';
 
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [open, setOpen] = useState(false);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <AppBar position="static">
+      <ModalCarrito open={open} handleClose={handleClose} />
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -41,14 +39,6 @@ function ResponsiveAppBar() {
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            ></IconButton>
           </Box>
           <Typography
             variant="h5"
@@ -69,7 +59,7 @@ function ResponsiveAppBar() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
           <Box sx={{ flexGrow: 0 }}>
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+            <IconButton onClick={handleOpen} sx={{ p: 0 }}>
               <Badge badgeContent={4} color="secondary">
                 <AddShoppingCartIcon sx={{ color: "white" }} />
               </Badge>
