@@ -1,4 +1,6 @@
 import React from "react";
+import { defineCustomElements } from 'ionicons/dist/loader';
+defineCustomElements();
 
 export const Navbar = ({ cantidadCompras, toggleModal }) => {
   return (
