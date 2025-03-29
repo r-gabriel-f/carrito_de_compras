@@ -10,6 +10,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+import Alert from "@mui/material/Alert";
+import { Snackbar } from "@mui/material";
 import { DataCarrito } from "../Data/DataCarrito";
 
 const style = {
@@ -23,36 +25,50 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
 export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
+  const [openBay, setOpenBay] = React.useState(false);
+  const [message, setMessage] = React.useState("");
+  const [messageAlert, setMessageAlert] = React.useState("");
+
   const dataPlatoSelected = () => {
-    const data = DataCarrito.filter((item) => contadorPorPlato[item.id]).map(
+    return DataCarrito.filter((item) => contadorPorPlato[item.id]).map(
       (item) => ({
         ...item,
         amount: contadorPorPlato[item.id],
         total: item.price * contadorPorPlato[item.id],
       })
     );
-    return data;
   };
+
   const selectPlato = dataPlatoSelected();
+
+  const buyPlato = () => {
+    if (selectPlato.length > 0) {
+      setMessage("¡Compra realizada con éxito!");
+      setMessageAlert("success");
+    } else {
+      setMessage("No tienes nada que comprar");
+      setMessageAlert("error");
+    }
+    setOpenBay(true);
+  };
+
+  const handleCloseBay = () => {
+    if (selectPlato.length > 0) {
+      handleClose()
+    }
+    setOpenBay(false);
+  };
+
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
+    <Modal open={open} onClose={handleClose}>
       <Box sx={style}>
-        <Typography
-          id="modal-modal-title"
-          variant="h6"
-          component="h2"
-          className="text-center my-5"
-        >
+        <Typography variant="h6" className="text-center my-5">
           Carrito de compras
         </Typography>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+          <Table sx={{ minWidth: 650 }} size="small">
             <TableHead>
               <TableRow>
                 <TableCell></TableCell>
@@ -64,12 +80,9 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
             </TableHead>
             <TableBody>
               {selectPlato.map((row) => (
-                <TableRow
-                  key={row.name}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    <img src={row.img} alt="" className="w-12 h-12" />
+                <TableRow key={row.name}>
+                  <TableCell>
+                    <img src={row.img} alt={row.name} className="w-12 h-12" />
                   </TableCell>
                   <TableCell>{row.name}</TableCell>
                   <TableCell>{row.amount}</TableCell>
@@ -81,10 +94,24 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
           </Table>
         </TableContainer>
         <div className="flex justify-center mt-4">
-          <Button variant="contained" color="success" onClick={handleClose}>
+          <Button variant="contained" color="success" onClick={buyPlato}>
             Comprar
           </Button>
         </div>
+        <Snackbar
+          open={openBay}
+          autoHideDuration={1500}
+          onClose={handleCloseBay}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        >
+          <Alert
+            onClose={handleCloseBay}
+            severity={messageAlert}
+            variant="filled"
+          >
+            {message}
+          </Alert>
+        </Snackbar>
       </Box>
     </Modal>
   );
