@@ -13,7 +13,9 @@ import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import { Snackbar } from "@mui/material";
 import { DataCarrito } from "../Data/DataCarrito";
-import { useStore } from "../stores/Bay"; // Asegúrate de que la ruta sea correcta
+import { useStore } from "../stores/Bay";
+import StripeProvider from "./StripeProvider";
+import StripeCheckout from "./StripeCheckout";
 
 const style = {
   position: "absolute",
@@ -31,6 +33,7 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
   const [openBay, setOpenBay] = React.useState(false);
   const [message, setMessage] = React.useState("");
   const [messageAlert, setMessageAlert] = React.useState("");
+  const [showCheckout, setShowCheckout] = React.useState(false);
   const rest = useStore((state) => state.rest);
 
   const dataPlatoSelected = () => {
@@ -47,13 +50,12 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
 
   const buyPlato = () => {
     if (selectPlato.length > 0) {
-      setMessage("¡Compra realizada con éxito!");
-      setMessageAlert("success");
+      setShowCheckout(true);
     } else {
       setMessage("No tienes nada que comprar");
       setMessageAlert("error");
+      setOpenBay(true);
     }
-    setOpenBay(true);
   };
 
   const handleCloseBay = () => {
@@ -63,6 +65,19 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
     }
     setOpenBay(false);
   };
+
+  const handlePaymentSuccess = () => {
+    setMessage("¡Pago realizado con éxito!");
+    setMessageAlert("success");
+    setOpenBay(true);
+    setShowCheckout(false);
+  };
+
+  const handlePaymentCancel = () => {
+    setShowCheckout(false);
+  };
+
+  const totalAmount = selectPlato.reduce((sum, item) => sum + item.total, 0);
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -93,14 +108,34 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
                   <TableCell>{row.total}</TableCell>
                 </TableRow>
               ))}
+              {selectPlato.length > 0 && (
+                <TableRow>
+                  <TableCell colSpan={3}></TableCell>
+                  <TableCell><strong>Total:</strong></TableCell>
+                  <TableCell><strong>{totalAmount} Bs.</strong></TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-        <div className="flex justify-center mt-4">
-          <Button variant="contained" color="success" onClick={buyPlato}>
-            Comprar
-          </Button>
-        </div>
+        
+        {showCheckout ? (
+          <StripeProvider>
+            <StripeCheckout 
+              amount={totalAmount} 
+              onSuccess={handlePaymentSuccess} 
+              onCancel={handlePaymentCancel}
+              items={selectPlato}
+            />
+          </StripeProvider>
+        ) : (
+          <div className="flex justify-center mt-4">
+            <Button variant="contained" color="success" onClick={buyPlato}>
+              Comprar
+            </Button>
+          </div>
+        )}
+        
         <Snackbar
           open={openBay}
           autoHideDuration={1500}
