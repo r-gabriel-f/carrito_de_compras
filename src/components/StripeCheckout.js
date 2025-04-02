@@ -108,7 +108,7 @@ const StripeCheckout = ({ amount, onSuccess, onCancel }) => {
     const createPaymentIntent = async () => {
       try {
         setIsLoading(true);
-        const { data } = await axios.post('http://localhost:3001/stripe/payment', {
+        const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/stripe/payment`, {
           amount: totalAmount,
           currency: 'bob',
           productId: 'prod_S2DF21h1TNksTS',
