@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import StripeProvider from "./StripeProvider";
 import StripeCheckout from "./StripeCheckout";
 
 const style = {
@@ -34,14 +33,12 @@ const PaymentModal = ({ open, handleClose, amount, onSuccess, items }) => {
           Pago con Tarjeta de Crédito
         </Typography>
         
-        <StripeProvider>
-          <StripeCheckout 
-            amount={amount} 
-            onSuccess={handlePaymentSuccess} 
-            onCancel={handlePaymentCancel}
-            items={items}
-          />
-        </StripeProvider>
+        <StripeCheckout 
+          amount={amount} 
+          onSuccess={handlePaymentSuccess} 
+          onCancel={handlePaymentCancel}
+          items={items}
+        />
       </Box>
     </Modal>
   );
