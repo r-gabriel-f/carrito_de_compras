@@ -78,74 +78,76 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
   const totalAmount = selectPlato.reduce((sum, item) => sum + item.total, 0);
 
   return (
-    <Modal open={open} onClose={handleClose}>
-      <Box sx={style}>
-        <Typography variant="h6" className="text-center my-5">
-          Carrito de compras
-        </Typography>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell></TableCell>
-                <TableCell>Plato</TableCell>
-                <TableCell>Cantidad</TableCell>
-                <TableCell>Precio (Bs.)</TableCell>
-                <TableCell>Total (Bs.)</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {selectPlato.map((row) => (
-                <TableRow key={row.name}>
-                  <TableCell>
-                    <img src={row.img} alt={row.name} className="w-12 h-12" />
-                  </TableCell>
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell>{row.amount}</TableCell>
-                  <TableCell>{row.price}</TableCell>
-                  <TableCell>{row.total}</TableCell>
-                </TableRow>
-              ))}
-              {selectPlato.length > 0 && (
+    <>
+      <Modal open={open} onClose={handleClose}>
+        <Box sx={style}>
+          <Typography variant="h6" className="text-center my-5">
+            Carrito de compras
+          </Typography>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} size="small">
+              <TableHead>
                 <TableRow>
-                  <TableCell colSpan={3}></TableCell>
-                  <TableCell><strong>Total:</strong></TableCell>
-                  <TableCell><strong>{totalAmount} Bs.</strong></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell>Plato</TableCell>
+                  <TableCell>Cantidad</TableCell>
+                  <TableCell>Precio (Bs.)</TableCell>
+                  <TableCell>Total (Bs.)</TableCell>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        
-        <div className="flex justify-center mt-4">
-          <Button variant="contained" color="success" onClick={buyPlato}>
-            Comprar
-          </Button>
-        </div>
+              </TableHead>
+              <TableBody>
+                {selectPlato.map((row) => (
+                  <TableRow key={row.name}>
+                    <TableCell>
+                      <img src={row.img} alt={row.name} className="w-12 h-12" />
+                    </TableCell>
+                    <TableCell>{row.name}</TableCell>
+                    <TableCell>{row.amount}</TableCell>
+                    <TableCell>{row.price}</TableCell>
+                    <TableCell>{row.total}</TableCell>
+                  </TableRow>
+                ))}
+                {selectPlato.length > 0 && (
+                  <TableRow>
+                    <TableCell colSpan={3}></TableCell>
+                    <TableCell><strong>Total:</strong></TableCell>
+                    <TableCell><strong>{totalAmount} Bs.</strong></TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          
+          <div className="flex justify-center mt-4">
+            <Button variant="contained" color="success" onClick={buyPlato}>
+              Comprar
+            </Button>
+          </div>
 
-        <PaymentModal 
-          open={openPaymentModal}
-          handleClose={handleClosePaymentModal}
-          amount={totalAmount}
-          onSuccess={handlePaymentSuccess}
-          items={selectPlato}
-        />
-        
-        <Snackbar
-          open={openBay}
-          autoHideDuration={1500}
+          <PaymentModal 
+            open={openPaymentModal}
+            handleClose={handleClosePaymentModal}
+            amount={totalAmount}
+            onSuccess={handlePaymentSuccess}
+            items={selectPlato}
+          />
+        </Box>
+      </Modal>
+      
+      <Snackbar
+        open={openBay}
+        autoHideDuration={1500}
+        onClose={handleCloseBay}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
           onClose={handleCloseBay}
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          severity={messageAlert}
+          variant="filled"
         >
-          <Alert
-            onClose={handleCloseBay}
-            severity={messageAlert}
-            variant="filled"
-          >
-            {message}
-          </Alert>
-        </Snackbar>
-      </Box>
-    </Modal>
+          {message}
+        </Alert>
+      </Snackbar>
+    </>
   );
 }
