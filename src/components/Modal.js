@@ -14,8 +14,7 @@ import Alert from "@mui/material/Alert";
 import { Snackbar } from "@mui/material";
 import { DataCarrito } from "../Data/DataCarrito";
 import { useStore } from "../stores/Bay";
-import StripeProvider from "./StripeProvider";
-import StripeCheckout from "./StripeCheckout";
+import PaymentModal from "./PaymentModal";
 
 const style = {
   position: "absolute",
@@ -33,7 +32,7 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
   const [openBay, setOpenBay] = React.useState(false);
   const [message, setMessage] = React.useState("");
   const [messageAlert, setMessageAlert] = React.useState("");
-  const [showCheckout, setShowCheckout] = React.useState(false);
+  const [openPaymentModal, setOpenPaymentModal] = React.useState(false);
   const rest = useStore((state) => state.rest);
 
   const dataPlatoSelected = () => {
@@ -50,7 +49,7 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
 
   const buyPlato = () => {
     if (selectPlato.length > 0) {
-      setShowCheckout(true);
+      setOpenPaymentModal(true);
     } else {
       setMessage("No tienes nada que comprar");
       setMessageAlert("error");
@@ -70,11 +69,10 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
     setMessage("¡Pago realizado con éxito!");
     setMessageAlert("success");
     setOpenBay(true);
-    setShowCheckout(false);
   };
 
-  const handlePaymentCancel = () => {
-    setShowCheckout(false);
+  const handleClosePaymentModal = () => {
+    setOpenPaymentModal(false);
   };
 
   const totalAmount = selectPlato.reduce((sum, item) => sum + item.total, 0);
@@ -119,22 +117,19 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
           </Table>
         </TableContainer>
         
-        {showCheckout ? (
-          <StripeProvider>
-            <StripeCheckout 
-              amount={totalAmount} 
-              onSuccess={handlePaymentSuccess} 
-              onCancel={handlePaymentCancel}
-              items={selectPlato}
-            />
-          </StripeProvider>
-        ) : (
-          <div className="flex justify-center mt-4">
-            <Button variant="contained" color="success" onClick={buyPlato}>
-              Comprar
-            </Button>
-          </div>
-        )}
+        <div className="flex justify-center mt-4">
+          <Button variant="contained" color="success" onClick={buyPlato}>
+            Comprar
+          </Button>
+        </div>
+
+        <PaymentModal 
+          open={openPaymentModal}
+          handleClose={handleClosePaymentModal}
+          amount={totalAmount}
+          onSuccess={handlePaymentSuccess}
+          items={selectPlato}
+        />
         
         <Snackbar
           open={openBay}
