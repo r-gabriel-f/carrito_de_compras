@@ -37,12 +37,12 @@ const PaymentForm = ({ amount, onSuccess, onCancel }) => {
       });
 
       if (result.error) {
-        setError(`Pago fallido: ${result.error.message}`);
+        setError(`Payment failed: ${result.error.message}`);
         setProcessing(false);
       } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
         onSuccess();
       } else {
-        setError('El pago está pendiente de confirmación.');
+        setError('Payment is pending confirmation.');
         setProcessing(false);
       }
     } catch (err) {
@@ -78,7 +78,7 @@ const PaymentForm = ({ amount, onSuccess, onCancel }) => {
           onClick={onCancel}
           disabled={processing}
         >
-          Cancelar
+          Cancel
         </Button>
         
         <Button 
@@ -90,7 +90,7 @@ const PaymentForm = ({ amount, onSuccess, onCancel }) => {
           {processing ? (
             <CircularProgress size={24} color="inherit" />
           ) : (
-            `Pagar Bs. ${amount}`
+            `Pay Bs. ${amount}`
           )}
         </Button>
       </Box>
@@ -112,12 +112,12 @@ const StripeCheckout = ({ amount, onSuccess, onCancel }) => {
           amount: totalAmount,
           currency: 'bob',
           productId: 'prod_S2DF21h1TNksTS',
-          productName: 'platostotal'
+          productName: 'totalDishes'
         });
         
         setClientSecret(data.client_secret);
       } catch (err) {
-        setError(`Error al inicializar el pago: ${err.message}`);
+        setError(`Error initializing payment: ${err.message}`);
       } finally {
         setIsLoading(false);
       }
@@ -134,7 +134,7 @@ const StripeCheckout = ({ amount, onSuccess, onCancel }) => {
     <Box sx={{ mt: 3 }}>
       {succeeded ? (
         <Alert severity="success" sx={{ mb: 2 }}>
-          ¡Pago completado con éxito!
+          Payment completed successfully!
         </Alert>
       ) : isLoading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
@@ -149,7 +149,7 @@ const StripeCheckout = ({ amount, onSuccess, onCancel }) => {
           />
         </Elements>
       ) : (
-        <Alert severity="error">No se pudo cargar el formulario de pago</Alert>
+        <Alert severity="error">Could not load payment form</Alert>
       )}
     </Box>
   );

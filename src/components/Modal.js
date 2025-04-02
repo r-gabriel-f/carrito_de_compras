@@ -51,7 +51,7 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
     if (selectPlato.length > 0) {
       setOpenPaymentModal(true);
     } else {
-      setMessage("No tienes nada que comprar");
+      setMessage("You have nothing to buy");
       setMessageAlert("error");
       setOpenBay(true);
     }
@@ -66,7 +66,7 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
   };
 
   const handlePaymentSuccess = () => {
-    setMessage("¡Pago realizado con éxito!");
+    setMessage("Payment completed successfully!");
     setMessageAlert("success");
     setOpenBay(true);
   };
@@ -82,16 +82,16 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
           <Typography variant="h6" className="text-center my-5">
-            Carrito de compras
+            Shopping Cart
           </Typography>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} size="small">
               <TableHead>
                 <TableRow>
                   <TableCell></TableCell>
-                  <TableCell>Plato</TableCell>
-                  <TableCell>Cantidad</TableCell>
-                  <TableCell>Precio (Bs.)</TableCell>
+                  <TableCell>Dish</TableCell>
+                  <TableCell>Quantity</TableCell>
+                  <TableCell>Price (Bs.)</TableCell>
                   <TableCell>Total (Bs.)</TableCell>
                 </TableRow>
               </TableHead>
@@ -120,7 +120,7 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
           
           <div className="flex justify-center mt-4">
             <Button variant="contained" color="success" onClick={buyPlato}>
-              Comprar
+              Buy
             </Button>
           </div>
 

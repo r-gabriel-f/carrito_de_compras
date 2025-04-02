@@ -35,7 +35,7 @@ function ResponsiveAppBar({ compras, contadorPorPlato }) {
               textDecoration: "none",
             }}
           >
-            Carrito de compras
+            Shopping Cart
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}></Box>
@@ -54,7 +54,7 @@ function ResponsiveAppBar({ compras, contadorPorPlato }) {
               textDecoration: "none",
             }}
           >
-            Carrito de compras
+            Shopping Cart
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
           <Box sx={{ flexGrow: 0 }}>

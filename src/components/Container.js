@@ -67,10 +67,10 @@ const Container = ({
                   {product.name}
                 </Typography>
                 <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                  Precio: {product.price} Bs
+                  Price: {product.price} Bs
                 </Typography>
                 <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                  Cantidad: {contadorPorPlato[product.id] || 0}
+                  Quantity: {contadorPorPlato[product.id] || 0}
                 </Typography>
               </CardContent>
               <CardActions>
@@ -80,7 +80,7 @@ const Container = ({
                   color="success"
                   onClick={() => incrementarCantidad(product.id)}
                 >
-                  Comprar
+                  Buy
                 </Button>
                 <Button
                   size="small"
@@ -88,7 +88,7 @@ const Container = ({
                   color="error"
                   onClick={() => restarCantidad(product.id)}
                 >
-                  Restar
+                  Remove
                 </Button>
               </CardActions>
             </Card>

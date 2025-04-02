@@ -30,7 +30,7 @@ const PaymentModal = ({ open, handleClose, amount, onSuccess, items }) => {
     <Modal open={open} onClose={handleClose}>
       <Box sx={style}>
         <Typography variant="h6" className="text-center mb-4">
-          Pago con Tarjeta de Crédito
+          Credit Card Payment
         </Typography>
         
         <StripeCheckout 
