@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import ModalCarrito from "./Modal";
+import ModalBuy from "./ModalBuy";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,16 +10,26 @@ import Typography from "@mui/material/Typography";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Container from "@mui/material/Container";
 import Badge from "@mui/material/Badge";
+import { Button } from "@mui/material";
 
 function ResponsiveAppBar({ compras, contadorPorPlato }) {
   const [open, setOpen] = useState(false);
+  const [openBuy, setOpenBuy] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const handleOpenBuy = () => setOpenBuy(true);
+  const handleCloseBuy = () => setOpenBuy(false);
+
   return (
     <AppBar position="static">
-      <ModalCarrito open={open} handleClose={handleClose} contadorPorPlato={contadorPorPlato}/>
+      <ModalCarrito
+        open={open}
+        handleClose={handleClose}
+        contadorPorPlato={contadorPorPlato}
+      />
+      <ModalBuy open={openBuy} handleClose={handleCloseBuy} />
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -57,13 +68,16 @@ function ResponsiveAppBar({ compras, contadorPorPlato }) {
             Shopping Cart
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
-          <Box sx={{ flexGrow: 0 }}>
+          <div className="flex gap-2">
+            <Button onClick={handleOpenBuy} color="inherit" variant="outlined">
+              Payment History
+            </Button>
             <IconButton onClick={handleOpen} sx={{ p: 0 }}>
               <Badge badgeContent={compras || 0} color="secondary">
                 <AddShoppingCartIcon sx={{ color: "white" }} />
               </Badge>
             </IconButton>
-          </Box>
+          </div>
         </Toolbar>
       </Container>
     </AppBar>
