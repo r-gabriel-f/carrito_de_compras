@@ -65,11 +65,8 @@ export default function ModalBuy({ open, handleClose }) {
   return (
     <Modal open={open} onClose={handleClose}>
       <Box sx={style}>
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-center items-center mb-4">
           <Typography variant="h6">Payment History</Typography>
-          <Typography variant="caption" color="textSecondary">
-            Showing latest status for each payment
-          </Typography>
         </div>
         {loading && <Typography>Loading payments...</Typography>}
         {error && <Typography color="error">{error}</Typography>}

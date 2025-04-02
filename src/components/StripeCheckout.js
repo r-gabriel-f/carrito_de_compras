@@ -39,7 +39,7 @@ const PaymentForm = ({ amount, onSuccess, onCancel }) => {
       if (result.error) {
         setError(`Payment failed: ${result.error.message}`);
         setProcessing(false);
-      } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
+      } else if (result.paymentIntent && result.paymentIntent.status !== 'requires_payment_method') {
         onSuccess();
       } else {
         setError('Payment is pending confirmation.');
