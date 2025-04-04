@@ -140,6 +140,8 @@ const StripeCheckout = ({ amount, onSuccess, onCancel }) => {
         <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
           <CircularProgress />
         </Box>
+      ) : error ? (
+        <Alert severity="error">{error}</Alert>
       ) : clientSecret ? (
         <Elements stripe={stripePromise} options={{ clientSecret }}>
           <PaymentForm 
