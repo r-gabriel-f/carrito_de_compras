@@ -48,52 +48,55 @@ const Container = ({
  
 
   return (
-    <div className="bg-fondo bg-cover bg-center h-screen">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {DataCarrito.map((product) => (
-          <div className="mt-5" key={product.id}>
-            <Card
-              sx={{
-                maxWidth: 345,
-                mx: "auto",
-                my: "auto",
-                backgroundColor: "rgba(255, 255, 255, 0.7)",
-                backdropFilter: "blur(5px)",
-              }}
-            >
-              <CardMedia sx={{ height: 140 }} image={product.img} />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {product.name}
-                </Typography>
-                <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                  Price: {product.price} Bs
-                </Typography>
-                <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                  Quantity: {contadorPorPlato[product.id] || 0}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button
-                  size="small"
-                  variant="contained"
-                  color="success"
-                  onClick={() => incrementarCantidad(product.id)}
-                >
-                  Buy
-                </Button>
-                <Button
-                  size="small"
-                  variant="contained"
-                  color="error"
-                  onClick={() => restarCantidad(product.id)}
-                >
-                  Remove
-                </Button>
-              </CardActions>
-            </Card>
-          </div>
-        ))}
+    <div className="bg-fondo bg-cover bg-center min-h-screen pb-10">
+      <div className="container mx-auto px-4 py-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          {DataCarrito.map((product) => (
+            <div className="mt-5" key={product.id}>
+              <Card
+                sx={{
+                  width: '100%',
+                  maxWidth: { xs: '100%', sm: 345 },
+                  mx: "auto",
+                  my: "auto",
+                  backgroundColor: "rgba(255, 255, 255, 0.7)",
+                  backdropFilter: "blur(5px)",
+                }}
+              >
+                <CardMedia sx={{ height: 140 }} image={product.img} />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {product.name}
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                    Price: {product.price} Bs
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                    Quantity: {contadorPorPlato[product.id] || 0}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    color="success"
+                    onClick={() => incrementarCantidad(product.id)}
+                  >
+                    Buy
+                  </Button>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    color="error"
+                    onClick={() => restarCantidad(product.id)}
+                  >
+                    Remove
+                  </Button>
+                </CardActions>
+              </Card>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

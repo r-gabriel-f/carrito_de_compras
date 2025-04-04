@@ -21,11 +21,22 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 900,
+  width: {
+    xs: '90%',
+    sm: '80%',
+    md: 900
+  },
+  maxWidth: '100%',
+  maxHeight: '90vh',
+  overflow: 'auto',
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
-  p: 4,
+  p: {
+    xs: 2,
+    sm: 3,
+    md: 4
+  },
 };
 
 export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
@@ -85,7 +96,7 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
             Shopping Cart
           </Typography>
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} size="small">
+            <Table sx={{ minWidth: { xs: 300, sm: 450, md: 650 } }} size="small">
               <TableHead>
                 <TableRow>
                   <TableCell></TableCell>
@@ -121,6 +132,9 @@ export default function ModalCarrito({ open, handleClose, contadorPorPlato }) {
           <div className="flex justify-center mt-4">
             <Button variant="contained" color="success" onClick={buyPlato}>
               Buy
+            </Button>
+            <Button variant="contained" color="secondary" onClick={handleClose} sx={{ ml: 2 }}>
+              Close
             </Button>
           </div>
 

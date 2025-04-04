@@ -9,11 +9,21 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 500,
+  width: {
+    xs: '90%',
+    sm: '80%',
+    md: 500
+  },
+  maxWidth: '100%',
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
-  p: 4,
+  p: {
+    xs: 2,
+    sm: 3,
+    md: 4
+  },
+  overflow: "auto",
 };
 
 const PaymentModal = ({ open, handleClose, amount, onSuccess, items }) => {

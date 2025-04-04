@@ -18,12 +18,21 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 600,
+  width: {
+    xs: '90%',
+    sm: '80%',
+    md: 600
+  },
+  maxWidth: '100%',
   maxHeight: "80vh",
   bgcolor: "background.paper",
   borderRadius: 2,
   boxShadow: 24,
-  p: 4,
+  p: {
+    xs: 2,
+    sm: 3,
+    md: 4
+  },
   overflow: "auto",
 };
 

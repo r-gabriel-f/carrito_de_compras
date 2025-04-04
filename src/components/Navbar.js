@@ -68,11 +68,24 @@ function ResponsiveAppBar({ compras, contadorPorPlato }) {
             Shopping Cart
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
-          <div className="flex gap-2">
-            <Button onClick={handleOpenBuy} color="inherit" variant="outlined">
-              Payment History
+          <div className="flex items-center gap-2">
+            <Button 
+              onClick={handleOpenBuy} 
+              color="inherit" 
+              variant="outlined"
+              className="text-xs sm:text-sm whitespace-nowrap"
+              sx={{ 
+                px: { xs: 1, sm: 2 },
+                py: { xs: 0.5, sm: 1 }
+              }}
+            >
+              <span className="hidden xs:inline">Payment</span> History
             </Button>
-            <IconButton onClick={handleOpen} sx={{ p: 0 }}>
+            <IconButton 
+              onClick={handleOpen} 
+              sx={{ p: { xs: 0.5, sm: 1 } }}
+              className="ml-1"
+            >
               <Badge badgeContent={compras || 0} color="secondary">
                 <AddShoppingCartIcon sx={{ color: "white" }} />
               </Badge>
